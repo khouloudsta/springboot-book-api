@@ -1,0 +1,20 @@
+### Anlegen
+POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin"
+}
+
+###
+GET http://localhost:8080/api/books
+
+###
+GET http://localhost:8080/api/books/1
+
+###
+DELETE http://localhost:8080/api/books/1
+
+###
+GET http://localhost:8080/api/books/999
