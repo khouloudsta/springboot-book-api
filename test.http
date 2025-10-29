@@ -1,5 +1,5 @@
 ### Anlegen
-POST http://localhost:8080/api/books
+POST http://127.0.0.1:8080/api/books
 Content-Type: application/json
 
 {
@@ -8,13 +8,13 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/books
+GET http://127.0.0.1:8080/api/books
 
 ###
-GET http://localhost:8080/api/books/1
+GET http://127.0.0.1:8080/api/books/1
 
 ###
-DELETE http://localhost:8080/api/books/1
+DELETE http://127.0.0.1:8080/api/books/1
 
 ###
-GET http://localhost:8080/api/books/999
+GET http://127.0.0.1:8080/api/books/999
