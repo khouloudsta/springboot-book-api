@@ -16,5 +16,15 @@ public class BookService {
     public Book create(Book book) { return repo.save(book); }
 
     public void delete(Long id) { repo.deleteById(id); }
+
+    public Book update(Long id, Book book) {
+        Book existingBook = repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Book not found"));
+
+        existingBook.setTitle(book.getTitle());
+        existingBook.setAuthor(book.getAuthor());
+
+        return repo.save(existingBook);
+    }
 }
 

@@ -5,11 +5,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
+
 public class BookController {
     private final BookService service;
+    private final AuthorRepository authorRepo;
 
-    public BookController(BookService service) {
+    public BookController(BookService service, AuthorRepository authorRepo) {
         this.service = service;
+        this.authorRepo = authorRepo;
     }
 
     @GetMapping
@@ -25,6 +28,14 @@ public class BookController {
     @PostMapping
     public Book create(@RequestBody Book book) {
         return service.create(book);
+    }
+
+    @PutMapping("/{id}")
+    public Book update(
+            @PathVariable Long id,
+            @RequestBody Book book
+    ) {
+        return service.update(id, book);
     }
 
     @DeleteMapping("/{id}")
