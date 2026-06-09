@@ -11,7 +11,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Title cannot be empty")
     private String title;
 
     // Beziehung zu Author herstellen

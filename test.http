@@ -24,10 +24,9 @@ PUT http://127.0.0.1:8080/api/books/3
 Content-Type: application/json
 
 {
-  "title": "Clean Code Updated",
+  "title": "",
   "author": { "id": 1 }
 }
-
 ###
 GET http://127.0.0.1:8080/api/books/3
 ###

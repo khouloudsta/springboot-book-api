@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -26,14 +27,14 @@ public class BookController {
     }
 
     @PostMapping
-    public Book create(@RequestBody Book book) {
+    public Book create(@Valid @RequestBody Book book) {
         return service.create(book);
     }
 
     @PutMapping("/{id}")
     public Book update(
             @PathVariable Long id,
-            @RequestBody Book book
+            @Valid @RequestBody Book book
     ) {
         return service.update(id, book);
     }
