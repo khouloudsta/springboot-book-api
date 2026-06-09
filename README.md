@@ -4,12 +4,13 @@ A backend REST API for managing books and authors developed using Java and Sprin
 
 ## Features
 
-* Create a new book
-* Get all books
-* Get a book by ID
-* Delete a book
-* Manage authors
-* Exception handling
+- Create a new book
+- Get all books
+- Get a book by ID
+- Update books
+- Delete a book
+- Manage authors
+- Exception handling
 
 ## Technologies
 
@@ -42,6 +43,9 @@ GET /api/books/{id}
 
 POST /api/books
 → Create a new book
+
+PUT /api/books/{id}
+→ Update book
 
 DELETE /api/books/{id}
 → Delete a book
