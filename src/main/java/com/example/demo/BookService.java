@@ -4,8 +4,12 @@ import java.util.*;
 
 @Service
 public class BookService {
+    private final AuthorRepository authorRepo;
     private final BookRepository repo;
-    public BookService(BookRepository repo) { this.repo = repo; }
+
+    public BookService(AuthorRepository authorRepo, BookRepository repo) {
+        this.authorRepo = authorRepo;
+        this.repo = repo; }
 
     public List<Book> getAll() { return repo.findAll(); }
 
@@ -22,7 +26,15 @@ public class BookService {
                 .orElseThrow(() -> new NoSuchElementException("Book not found"));
 
         existingBook.setTitle(book.getTitle());
-        existingBook.setAuthor(book.getAuthor());
+        if (book.getAuthor() != null) {
+            Author author = authorRepo.findById(
+                    book.getAuthor().getId()
+            ).orElseThrow(
+                    () -> new NoSuchElementException("Author not found")
+            );
+
+            existingBook.setAuthor(author);
+        }
 
         return repo.save(existingBook);
     }

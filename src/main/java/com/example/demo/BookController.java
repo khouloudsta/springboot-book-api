@@ -17,13 +17,18 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getAll() {
-        return service.getAll();
+    public List<BookResponse> getAll() {
+        return service.getAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public Book getById(@PathVariable Long id) {
-        return service.getById(id);
+    public BookResponse  getById(@PathVariable Long id) {
+
+        Book book = service.getById(id);
+        return toResponse(book);
     }
 
     @PostMapping
@@ -32,15 +37,30 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public Book update(
+    public BookResponse  update(
             @PathVariable Long id,
             @Valid @RequestBody Book book
     ) {
-        return service.update(id, book);
+        Book updatedBook = service.update(id, book);
+        return toResponse(updatedBook);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.delete(id);
+    }
+
+    private BookResponse toResponse(Book book) {
+        String authorName = null;
+
+        if (book.getAuthor() != null) {
+            authorName = book.getAuthor().getName();
+        }
+
+        return new BookResponse(
+                book.getId(),
+                book.getTitle(),
+                authorName
+        );
     }
 }

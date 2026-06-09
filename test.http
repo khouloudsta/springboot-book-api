@@ -20,19 +20,19 @@ Content-Type: application/json
 GET http://127.0.0.1:8080/api/books
 
 ###
-PUT http://127.0.0.1:8080/api/books/3
+PUT http://127.0.0.1:8080/api/books/1
 Content-Type: application/json
 
 {
-  "title": "",
+  "title": "Clean Code Updated",
   "author": { "id": 1 }
 }
 ###
-GET http://127.0.0.1:8080/api/books/3
+GET http://127.0.0.1:8080/api/books/1
 ###
-DELETE http://127.0.0.1:8080/api/books/3
+DELETE http://127.0.0.1:8080/api/books/1
 
 ###
-GET http://127.0.0.1:8080/api/books/999
+GET http://127.0.0.1:8080/api/books/1
 
 
