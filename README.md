@@ -8,6 +8,7 @@ A backend REST API for managing books and authors developed using Java and Sprin
 - Get all books
 - Get a book by ID
 - Update books
+- - Validate book title
 - Delete a book
 - Manage authors
 - Exception handling
