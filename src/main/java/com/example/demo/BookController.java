@@ -9,11 +9,9 @@ import java.util.List;
 
 public class BookController {
     private final BookService service;
-    private final AuthorRepository authorRepo;
 
-    public BookController(BookService service, AuthorRepository authorRepo) {
+    public BookController(BookService service) {
         this.service = service;
-        this.authorRepo = authorRepo;
     }
 
     @GetMapping
@@ -32,8 +30,13 @@ public class BookController {
     }
 
     @PostMapping
-    public Book create(@Valid @RequestBody Book book) {
-        return service.create(book);
+    public BookResponse create(
+            @Valid @RequestBody Book book
+    ){
+        Book createdBook =
+                service.create(book);
+
+        return toResponse(createdBook);
     }
 
     @PutMapping("/{id}")

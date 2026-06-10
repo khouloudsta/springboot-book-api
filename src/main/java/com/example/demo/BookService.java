@@ -17,7 +17,25 @@ public class BookService {
         return repo.findById(id).orElseThrow(() -> new NoSuchElementException("Book not found"));
     }
 
-    public Book create(Book book) { return repo.save(book); }
+    public Book create(Book book) {
+
+        if (book.getAuthor() != null) {
+
+            Author author =
+                    authorRepo.findById(
+                                    book.getAuthor().getId()
+                            )
+                            .orElseThrow(
+                                    () -> new NoSuchElementException(
+                                            "Author not found"
+                                    )
+                            );
+
+            book.setAuthor(author);
+        }
+
+        return repo.save(book);
+    }
 
     public void delete(Long id) { repo.deleteById(id); }
 
