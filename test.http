@@ -109,3 +109,6 @@ Content-Type: application/json
 ### Gespeicherte Bücher abrufen
 GET http://127.0.0.1:8080/api/books
 
+### Bücher aus der Docker-Anwendung abrufen
+GET http://127.0.0.1:8080/api/books
+
