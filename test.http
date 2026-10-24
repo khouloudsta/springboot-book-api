@@ -90,3 +90,22 @@ DELETE http://127.0.0.1:8080/api/books/999999
 ### Vorhandenes Buch löschen
 DELETE http://127.0.0.1:8080/api/books/1
 
+### Buch in PostgreSQL speichern
+POST http://127.0.0.1:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "PostgreSQL Test"
+}
+
+### Buch in PostgreSQL speichern
+POST http://127.0.0.1:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "PostgreSQL Test"
+}
+
+### Gespeicherte Bücher abrufen
+GET http://127.0.0.1:8080/api/books
+
