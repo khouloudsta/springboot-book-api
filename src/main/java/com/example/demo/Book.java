@@ -14,23 +14,38 @@ public class Book {
     @NotBlank(message = "Title cannot be empty")
     private String title;
 
-    // Beziehung zu Author herstellen
     @ManyToOne
-    @JoinColumn(name = "author_id")   // Fremdschlüssel in der Tabelle "books"
+    @JoinColumn(name = "author_id")
     private Author author;
 
-    protected Book() {} // für JPA
+    protected Book() {}
 
     public Book(String title, Author author) {
         this.title = title;
         this.author = author;
     }
 
-    public Long getId() { return id; }
-    public String getTitle() { return title; }
-    public Author getAuthor() { return author; }
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) { this.id = id; }
-    public void setTitle(String title) { this.title = title; }
-    public void setAuthor(Author author) { this.author = author; }
+    public String getTitle() {
+        return title;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 }

@@ -1,8 +1,10 @@
 package com.example.demo;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/books")
@@ -14,6 +16,10 @@ public class BookController {
         this.service = service;
     }
 
+    @Operation(
+            summary = "Get all books",
+            description = "Returns a list of all books"
+    )
     @GetMapping
     public List<BookResponse> getAll() {
         return service.getAll()
@@ -29,26 +35,36 @@ public class BookController {
         return toResponse(book);
     }
 
+    @Operation(
+            summary = "Create a book",
+            description = "Creates a new book"
+    )
     @PostMapping
-    public BookResponse create(
-            @Valid @RequestBody Book book
-    ){
-        Book createdBook =
-                service.create(book);
-
+    public BookResponse create(@Valid @RequestBody BookRequest request) {
+        Book createdBook = service.create(request);
         return toResponse(createdBook);
     }
 
+    @Operation(
+            summary = "Update a book",
+            description = "Updates a book by ID"
+    )
     @PutMapping("/{id}")
-    public BookResponse  update(
+    public BookResponse update(
             @PathVariable Long id,
-            @Valid @RequestBody Book book
+            @Valid @RequestBody BookRequest request
     ) {
-        Book updatedBook = service.update(id, book);
+        Book updatedBook = service.update(id, request);
         return toResponse(updatedBook);
     }
 
+    @Operation(
+            summary = "Delete a book",
+            description = "Deletes a book by ID"
+    )
+
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }

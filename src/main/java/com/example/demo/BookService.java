@@ -1,4 +1,5 @@
 package com.example.demo;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
@@ -17,42 +18,43 @@ public class BookService {
         return repo.findById(id).orElseThrow(() -> new NoSuchElementException("Book not found"));
     }
 
-    public Book create(Book book) {
+    public Book create(@Valid BookRequest request) {
+        Author author = null;
 
-        if (book.getAuthor() != null) {
-
-            Author author =
-                    authorRepo.findById(
-                                    book.getAuthor().getId()
-                            )
-                            .orElseThrow(
-                                    () -> new NoSuchElementException(
-                                            "Author not found"
-                                    )
-                            );
-
-            book.setAuthor(author);
+        if (request.getAuthorId() != null) {
+            author = authorRepo.findById(request.getAuthorId())
+                    .orElseThrow(
+                            () -> new NoSuchElementException("Author not found")
+                    );
         }
+
+        Book book = new Book(request.getTitle(), author);
 
         return repo.save(book);
     }
 
-    public void delete(Long id) { repo.deleteById(id); }
+    public void delete(Long id) {
+        Book book = getById(id);
+        repo.delete(book);
+    }
 
-    public Book update(Long id, Book book) {
+    public Book update(Long id, BookRequest request) {
         Book existingBook = repo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Book not found"));
+                .orElseThrow(
+                        () -> new NoSuchElementException("Book not found")
+                );
 
-        existingBook.setTitle(book.getTitle());
-        if (book.getAuthor() != null) {
-            Author author = authorRepo.findById(
-                    book.getAuthor().getId()
-            ).orElseThrow(
-                    () -> new NoSuchElementException("Author not found")
-            );
+        Author author = null;
 
-            existingBook.setAuthor(author);
+        if (request.getAuthorId() != null) {
+            author = authorRepo.findById(request.getAuthorId())
+                    .orElseThrow(
+                            () -> new NoSuchElementException("Author not found")
+                    );
         }
+
+        existingBook.setTitle(request.getTitle());
+        existingBook.setAuthor(author);
 
         return repo.save(existingBook);
     }
