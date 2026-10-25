@@ -27,5 +27,4 @@ services:
 
 volumes:
   pgdata:
-    external: true
     name: book-api-pgdata
