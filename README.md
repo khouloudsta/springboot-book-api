@@ -48,7 +48,7 @@ database access:
 - Response DTOs define returned data.
 - ApiExceptionHandler converts exceptions into HTTP responses.
 
-Java classes currently share the package `com.example.demo`.
+Java classes currently share the package `de.khouloudsta.bookapi`.
 
 ## Run with Docker Compose
 
@@ -289,15 +289,7 @@ bash ./mvnw "-Dtest=BookServiceTest,BookControllerTest" test
 The application context test requires a reachable PostgreSQL
 database and the database environment variables.
 
-With the Compose database running, PowerShell users can run
-all tests and package the application inside the Docker build
-environment:
-
-```powershell
-docker compose run --rm --no-deps --build --entrypoint bash app -c "exit"
-```
-
-Alternatively, use a local JDK 21 and a separately accessible
+Use a local JDK 21 and a separately accessible
 PostgreSQL database, set `DB_URL`, `DB_USERNAME` and `DB_PASSWORD`,
 then run:
 
