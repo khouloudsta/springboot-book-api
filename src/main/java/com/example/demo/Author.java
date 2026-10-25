@@ -3,6 +3,11 @@ package com.example.demo;
 import jakarta.persistence.*;
 import java.util.List;
 
+/**
+ * Persistent author entity with a generated identifier and a name.
+ * The books collection is the inverse side of the relationship; Book.author
+ * owns the foreign key. API responses use DTOs rather than serializing this collection.
+ */
 @Entity
 public class Author {
     @Id

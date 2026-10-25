@@ -3,6 +3,11 @@ package com.example.demo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * Persistent book entity mapped to the books table.
+ * Each book has a generated identifier, a non-blank title, and an optional author.
+ * The author association is stored in the author_id foreign-key column.
+ */
 @Entity
 @Table(name = "books")
 public class Book {
@@ -18,6 +23,7 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
+    /** No-argument constructor required by JPA. */
     protected Book() {}
 
     public Book(String title, Author author) {

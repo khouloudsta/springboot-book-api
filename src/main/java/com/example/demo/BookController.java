@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Handles book CRUD requests at /api/books.
+ * Validates incoming request DTOs, delegates operations to BookService,
+ * and maps entities to response DTOs.
+ */
 @RestController
 @RequestMapping("/api/books")
 
@@ -63,12 +68,14 @@ public class BookController {
             description = "Deletes a book by ID"
     )
 
+    /** Deletes a book and returns HTTP 204 with no response body. */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
 
+    /** Maps a book to its API representation, allowing a missing author. */
     private BookResponse toResponse(Book book) {
         String authorName = null;
 

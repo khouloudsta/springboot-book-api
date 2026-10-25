@@ -24,6 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.mockito.ArgumentCaptor;
 
+/**
+ * Tests book lookup and creation using mocked repositories.
+ * Checks missing resources and creation with or without an author
+ * without starting Spring or connecting to a database.
+ */
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
 
@@ -38,17 +43,17 @@ class BookServiceTest {
 
     @Test
     void getById_returnsBook_whenBookExists() {
-        // Vorbereitung
+        // Arrange
         Book book = new Book("Clean Code", null);
         book.setId(1L);
 
         when(bookRepository.findById(1L))
                 .thenReturn(Optional.of(book));
 
-        // Ausführung
+        // Act
         Book result = bookService.getById(1L);
 
-        // Prüfung
+        // Assert
         assertSame(book, result);
     }
 

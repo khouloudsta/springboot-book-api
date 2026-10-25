@@ -1,5 +1,9 @@
 package com.example.demo;
 
+/**
+ * Response DTO exposing an author identifier and name.
+ * Excludes the entity books collection from the JSON response.
+ */
 public class AuthorResponse {
 
     private Long id;

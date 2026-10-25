@@ -17,6 +17,10 @@ import java.util.NoSuchElementException;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+/**
+ * Tests book HTTP responses and request validation using MockMvc.
+ * The service is mocked, so these tests do not require a database.
+ */
 @WebMvcTest(BookController.class)
 @Import(ApiExceptionHandler.class)
 class BookControllerTest {

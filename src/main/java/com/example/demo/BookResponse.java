@@ -1,5 +1,9 @@
 package com.example.demo;
 
+/**
+ * Response DTO exposing a book identifier, title, and author name.
+ * The author name is null when the book has no author.
+ */
 public class BookResponse {
     private Long id;
     private String title;

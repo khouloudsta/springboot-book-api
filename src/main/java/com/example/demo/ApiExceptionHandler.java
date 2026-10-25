@@ -12,9 +12,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.LinkedHashMap;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 
+/**
+ * Converts application exceptions into structured JSON error responses.
+ * Validation and unreadable request bodies return HTTP 400, missing resources
+ * return HTTP 404, and unexpected exceptions return HTTP 500.
+ */
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
+    /** Returns HTTP 404 with the missing-resource message. */
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Map<String, Object>> handleNotFound(NoSuchElementException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -24,6 +30,7 @@ public class ApiExceptionHandler {
                 ));
     }
 
+    /** Returns HTTP 500 without exposing internal exception details. */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleOtherErrors(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -33,6 +40,7 @@ public class ApiExceptionHandler {
                 ));
     }
 
+    /** Returns HTTP 400 with validation messages grouped by field name. */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(
             MethodArgumentNotValidException ex
@@ -54,6 +62,7 @@ public class ApiExceptionHandler {
 
     }
 
+    /** Returns HTTP 400 when JSON cannot be converted into the request DTO. */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidJson(
             HttpMessageNotReadableException ex
