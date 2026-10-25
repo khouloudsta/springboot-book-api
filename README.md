@@ -269,6 +269,10 @@ The current suite contains:
 - 11 BookService unit tests using JUnit and Mockito
 - 3 BookController tests using MockMvc
 - 1 Spring Boot application context test
+- 1 BookIntegrationTest using Testcontainers and PostgreSQL
+
+The integration test requires Docker and starts its own PostgreSQL
+container. It does not use the development database.
 
 Service and controller tests do not require a running database.
 
@@ -322,7 +326,6 @@ The CI database is separate from local development data.
 
 ## Planned Improvements
 
-- PostgreSQL integration tests with Testcontainers
 - Database migrations with Flyway
 - Search, pagination and sorting
 - Additional test coverage
