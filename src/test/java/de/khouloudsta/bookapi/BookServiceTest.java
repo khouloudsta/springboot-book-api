@@ -132,4 +132,148 @@ class BookServiceTest {
 
         verify(authorRepository, never()).findById(any());
     }
+    /**
+     * Verifies that updating a book replaces its title and author.
+     */
+    @Test
+    void update_changesTitleAndAuthor_whenBothExist() {
+        Author oldAuthor = new Author();
+        oldAuthor.setId(1L);
+
+        Author newAuthor = new Author();
+        newAuthor.setId(2L);
+
+        Book existingBook = new Book("Old title", oldAuthor);
+        existingBook.setId(10L);
+
+        BookRequest request = new BookRequest();
+        request.setTitle("Updated title");
+        request.setAuthorId(2L);
+
+        when(bookRepository.findById(10L))
+                .thenReturn(Optional.of(existingBook));
+        when(authorRepository.findById(2L))
+                .thenReturn(Optional.of(newAuthor));
+        when(bookRepository.save(any(Book.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Book result = bookService.update(10L, request);
+
+        assertEquals(10L, result.getId());
+        assertEquals("Updated title", result.getTitle());
+        assertSame(newAuthor, result.getAuthor());
+        verify(bookRepository).save(existingBook);
+    }
+
+    /**
+     * Verifies that updating a missing book fails without saving data.
+     */
+    @Test
+    void update_throwsException_whenBookDoesNotExist() {
+        BookRequest request = new BookRequest();
+        request.setTitle("Updated title");
+
+        when(bookRepository.findById(999L))
+                .thenReturn(Optional.empty());
+
+        NoSuchElementException exception = assertThrows(
+                NoSuchElementException.class,
+                () -> bookService.update(999L, request)
+        );
+
+        assertEquals("Book not found", exception.getMessage());
+        verify(bookRepository, never()).save(any(Book.class));
+    }
+
+    /**
+     * Verifies that an existing book is passed to the repository for deletion.
+     */
+    @Test
+    void delete_deletesBook_whenBookExists() {
+        Book book = new Book("Clean Code", null);
+        book.setId(10L);
+
+        when(bookRepository.findById(10L))
+                .thenReturn(Optional.of(book));
+
+        bookService.delete(10L);
+
+        verify(bookRepository).delete(book);
+    }
+
+    /**
+     * Verifies that deleting a missing book fails without deleting data.
+     */
+    @Test
+    void delete_throwsException_whenBookDoesNotExist() {
+        when(bookRepository.findById(999L))
+                .thenReturn(Optional.empty());
+
+        NoSuchElementException exception = assertThrows(
+                NoSuchElementException.class,
+                () -> bookService.delete(999L)
+        );
+
+        assertEquals("Book not found", exception.getMessage());
+        verify(bookRepository, never()).delete(any(Book.class));
+    }
+
+    /**
+     * Verifies that omitting the author identifier removes the existing author.
+     */
+    @Test
+    void update_removesAuthor_whenAuthorIdIsMissing() {
+        Author author = new Author();
+        author.setId(1L);
+
+        Book existingBook = new Book("Old title", author);
+        existingBook.setId(10L);
+
+        BookRequest request = new BookRequest();
+        request.setTitle("Updated title");
+
+        when(bookRepository.findById(10L))
+                .thenReturn(Optional.of(existingBook));
+        when(bookRepository.save(any(Book.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Book result = bookService.update(10L, request);
+
+        assertEquals("Updated title", result.getTitle());
+        assertNull(result.getAuthor());
+        verify(bookRepository).save(existingBook);
+        verify(authorRepository, never()).findById(any());
+    }
+
+    /**
+     * Verifies that an unknown author prevents an update
+     * and leaves the existing book unchanged.
+     */
+    @Test
+    void update_doesNotChangeBook_whenAuthorDoesNotExist() {
+        Author originalAuthor = new Author();
+        originalAuthor.setId(1L);
+
+        Book existingBook = new Book("Original title", originalAuthor);
+        existingBook.setId(10L);
+
+        BookRequest request = new BookRequest();
+        request.setTitle("Updated title");
+        request.setAuthorId(999L);
+
+        when(bookRepository.findById(10L))
+                .thenReturn(Optional.of(existingBook));
+        when(authorRepository.findById(999L))
+                .thenReturn(Optional.empty());
+
+        NoSuchElementException exception = assertThrows(
+                NoSuchElementException.class,
+                () -> bookService.update(10L, request)
+        );
+
+        assertEquals("Author not found", exception.getMessage());
+        assertEquals("Original title", existingBook.getTitle());
+        assertSame(originalAuthor, existingBook.getAuthor());
+        verify(bookRepository, never()).save(any(Book.class));
+    }
 }

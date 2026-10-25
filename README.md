@@ -266,7 +266,7 @@ Additional manual requests are available in `test.http`.
 
 The current suite contains:
 
-- 5 BookService unit tests using JUnit and Mockito
+- 11 BookService unit tests using JUnit and Mockito
 - 3 BookController tests using MockMvc
 - 1 Spring Boot application context test
 
