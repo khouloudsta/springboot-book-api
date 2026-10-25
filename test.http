@@ -1,5 +1,5 @@
 ### 1. Autor anlegen
-POST http://127.0.0.1:8080/api/authors
+POST http://localhost:8080/api/authors
 Content-Type: application/json
 
 {
@@ -23,7 +23,7 @@ Content-Type: application/json
   "authorId": 1
 }
 ### Autoren anzeigen
-GET http://127.0.0.1:8080/api/authors
+GET http://localhost:8080/api/authors
 
 ### 4. Alle Bücher anzeigen
 GET http://127.0.0.1:8080/api/books

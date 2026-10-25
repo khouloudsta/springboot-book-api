@@ -1,4 +1,4 @@
-package com.example.demo;
+package de.khouloudsta.bookapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

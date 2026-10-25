@@ -1,4 +1,4 @@
-package com.example.demo;
+package de.khouloudsta.bookapi;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

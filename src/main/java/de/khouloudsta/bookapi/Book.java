@@ -1,4 +1,4 @@
-package com.example.demo;
+package de.khouloudsta.bookapi;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.example.demo;
+package de.khouloudsta.bookapi;
 
 /**
  * Response DTO exposing a book identifier, title, and author name.

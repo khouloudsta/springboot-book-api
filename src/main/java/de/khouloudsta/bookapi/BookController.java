@@ -1,4 +1,4 @@
-package com.example.demo;
+package de.khouloudsta.bookapi;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
