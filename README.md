@@ -154,13 +154,25 @@ with `spring.jpa.hibernate.ddl-auto=update`.
 
 | Method | Endpoint | Description | Success |
 |---|---|---|---|
-| GET | /api/books | List books | 200 |
+| GET | /api/books | Search and list books with pagination and sorting | 200 |
 | GET | /api/books/{id} | Retrieve a book | 200 |
 | POST | /api/books | Create a book | 200 |
 | PUT | /api/books/{id} | Update a book | 200 |
 | DELETE | /api/books/{id} | Delete a book | 204 |
 | GET | /api/authors | List authors | 200 |
 | POST | /api/authors | Create an author | 200 |
+
+### Search, pagination and sorting
+
+```http
+GET /api/books?title=clean&page=0&size=5&sort=title,asc
+```
+
+Title filtering is case-insensitive and matches partial titles.
+Page numbering starts at 0. The default page size is 20,
+with books sorted by ID.
+
+The response contains books in `content` and pagination metadata.
 
 ### Create an author
 
@@ -267,12 +279,13 @@ Additional manual requests are available in `test.http`.
 The current suite contains:
 
 - 11 BookService unit tests using JUnit and Mockito
-- 3 BookController tests using MockMvc
+- 4 BookController tests using MockMvc
+- 2 BookIntegrationTest tests using Testcontainers and PostgreSQL
 - 1 Spring Boot application context test
-- 1 BookIntegrationTest using Testcontainers and PostgreSQL
+
 
 The integration test requires Docker and starts its own PostgreSQL
-container. It does not use the development database.
+container. It does not use the developent database.
 
 Service and controller tests do not require a running database.
 

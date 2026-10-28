@@ -2,6 +2,8 @@ package de.khouloudsta.bookapi;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import java.util.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Implements book retrieval, creation, update, and deletion.
@@ -92,5 +94,24 @@ public class BookService {
         existingBook.setAuthor(author);
 
         return repo.save(existingBook);
+    }
+
+    /**
+     * Retrieves a page of books, optionally filtered by title.
+     * Missing or blank search text returns all books with pagination.
+     *
+     * @param title optional text to search for, ignoring case
+     * @param pageable the requested page, page size, and sorting
+     * @return a page of matching books
+     */
+    public Page<Book> search(String title, Pageable pageable) {
+        if (title == null || title.isBlank()) {
+            return repo.findAll(pageable);
+        }
+
+        return repo.findByTitleContainingIgnoreCase(
+                title.strip(),
+                pageable
+        );
     }
 }

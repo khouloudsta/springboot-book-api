@@ -3,8 +3,10 @@ package de.khouloudsta.bookapi;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 /**
  * Handles book CRUD requests at /api/books.
@@ -21,16 +23,25 @@ public class BookController {
         this.service = service;
     }
 
+    /**
+     * Retrieves books with optional title filtering, pagination, and sorting.
+     *
+     * @param title optional title fragment to search for, ignoring case
+     * @param pageable pagination and sorting settings; defaults to 20 books
+     *                 per page, sorted by identifier
+     * @return matching book responses with pagination metadata
+     */
     @Operation(
-            summary = "Get all books",
-            description = "Returns a list of all books"
+            summary = "Search and list books",
+            description = "Returns a page of books, optionally filtered by title"
     )
     @GetMapping
-    public List<BookResponse> getAll() {
-        return service.getAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+    public Page<BookResponse> getAll(
+            @RequestParam(required = false) String title,
+            @PageableDefault(size = 20, sort = "id") Pageable pageable
+    ) {
+        return service.search(title, pageable)
+                .map(this::toResponse);
     }
 
     @GetMapping("/{id}")
