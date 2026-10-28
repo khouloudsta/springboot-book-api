@@ -147,8 +147,9 @@ Docker Compose sets `DB_URL` to
 `jdbc:postgresql://db:5432/bookdb`, where `db` is the database
 service name.
 
-Database tables are currently managed through Hibernate
-with `spring.jpa.hibernate.ddl-auto=update`.
+Database schema changes are managed through Flyway migrations
+in `src/main/resources/db/migration`.
+Hibernate validates the schema using `spring.jpa.hibernate.ddl-auto=validate`.
 
 ## API Endpoints
 
